@@ -56,7 +56,8 @@ startBtn.addEventListener(`click`, function(){
             })
         }
     } else if (selectLevel === `hard`){
-       
+        let gameCounter = generateCounter(gameScore);
+        counterSection.append(gameCounter);
 
         let newSquare
         for(let i = 1; i <= 81; i++){
@@ -79,7 +80,9 @@ startBtn.addEventListener(`click`, function(){
             })
         }
     } else if (selectLevel === `crazy`){
-    
+        let gameCounter = generateCounter(gameScore);
+        counterSection.append(gameCounter);
+
         let newSquare
         for(let i = 1; i <= 49; i++){
             newSquare = generateSquare (i);
