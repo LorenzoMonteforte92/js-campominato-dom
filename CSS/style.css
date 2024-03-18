@@ -130,3 +130,14 @@ span{
     height: calc(100% / 7);
     width: calc(100% / 7);
 }
+
+/*-----------
+    FOOTER
+-------------*/
+footer{
+    color: white;
+    height: 64px;
+    background-color: #083B4C;
+    text-align: center;
+
+}

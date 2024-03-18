@@ -18,7 +18,8 @@ startBtn.addEventListener(`click`, function(){
     let boxContainer = document.querySelector(`#container`);
     boxContainer.innerHTML = ` `;
     let selectLevel = document.querySelector(`#livello`).value;
-    let mainSection = document.querySelector(`#main`)
+    let counterSection = document.querySelector(`#counter-wrapper`)
+    counterSection.innerHTML = ` `;
     
     
     //array di numeri random
@@ -27,13 +28,13 @@ startBtn.addEventListener(`click`, function(){
 
     //punteggio del gioco
     let gameScore = 0
-    let scoreCounter = generateCounter(gameScore);
-    mainSection.prepend(scoreCounter);
+    
 
     
     //stampare un tipo di griglia in base alla difficoltà del gioco
     if(selectLevel === `easy`) {
-        
+        let gameCounter = generateCounter(gameScore)
+        counterSection.append(gameCounter)
         //generare una griglia di 100 elementi con numeri da 1 a 100
         let newSquare
         for(let i = 1; i <= 100; i++){
@@ -44,30 +45,59 @@ startBtn.addEventListener(`click`, function(){
                 console.log(gameResult);
                 this.classList.add(gameResult)
                 if(gameResult === `click-cell-continue`){
-                    gameScore ++
-                } else {
-                    alert(`Game Over, hai totalizzato: ${gameScore} punti`)
+                    gameScore ++;
+                    gameCounter.innerHTML = ``;
+                    gameCounter.innerHTML += `<span>Score: ${gameScore}</span>`
+                }   else {
+                    boxContainer.innerHTML = ` `;
+                    let gameFinish = gameOver (gameScore);
+                    boxContainer.append(gameFinish);
                 }
             })
         }
     } else if (selectLevel === `hard`){
+       
+
         let newSquare
         for(let i = 1; i <= 81; i++){
             newSquare = generateSquare (i);
             newSquare.classList.add(`hard-box`);
             boxContainer.append(newSquare);
             newSquare.addEventListener(`click`, function(){
-                this.classList.add(`click-cell`)
+                let gameResult = clickEvent(randomArr, i)
+                console.log(gameResult);
+                this.classList.add(gameResult)
+                if(gameResult === `click-cell-continue`){
+                    gameScore ++;
+                    gameCounter.innerHTML = ``;
+                    gameCounter.innerHTML += `<span>Score: ${gameScore}</span>`
+                } else {
+                    boxContainer.innerHTML = ` `;
+                    let gameFinish = gameOver (gameScore);
+                    boxContainer.append(gameFinish);
+                }
             })
         }
     } else if (selectLevel === `crazy`){
+    
         let newSquare
         for(let i = 1; i <= 49; i++){
             newSquare = generateSquare (i);
             newSquare.classList.add(`crazy-box`);
             boxContainer.append(newSquare);
             newSquare.addEventListener(`click`, function(){
-                this.classList.add(`click-cell`)
+                let gameResult = clickEvent(randomArr, i)
+                console.log(gameResult);
+                this.classList.add(gameResult)
+                if(gameResult === `click-cell-continue`){
+                    gameScore ++;
+                    gameCounter.innerHTML = ``;
+                    gameCounter.innerHTML += `<span>Score: ${gameScore}</span>`
+                } else {
+                    boxContainer.innerHTML = ` `;
+                    let gameFinish = gameOver (gameScore);
+                    boxContainer.append(gameFinish);
+                }
             })
         }
     }
@@ -131,13 +161,12 @@ function clickEvent(arrayName, number){
     return classAdd
 }
 
-// function gameOver (){
-//     const element = document.getElementById("container");
-//                     element.remove();
-//                     let overContainer = document.createElement(`div`);
-//                     overContainer.classList.add(`container-over`);
-//                     overContainer.innerHTML += `<h1>Game Over</h1>`
-// }
+function gameOver (number){
+    let overContainer = document.createElement(`div`);
+    overContainer.classList.add(`container-over`);
+    overContainer.innerHTML += `<h1>Game Over, hai totalizzato: ${number} punti</h1>`;
+    return overContainer
+}
 //processo
 
 //se clicco su una casella e il numero di quet'ultima è presente nell'array (.includes) allora casella rossa e game over
