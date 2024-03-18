@@ -80,12 +80,17 @@ function generateSquare (number){
 //min --> numero random da cui parte il range 
 //max --> numero random massimo a cui arriva il range
 //number --> limite massimo di numeri random da generare
-//return: array di numeri random
+//return: array di numeri random senza doppioni
 function getRndInteger(min, max, number) {
     let randomList = []
-    for (let i = 1; i < number; i++){
+    for (let i = 1; i <= number; i++){
         randomNum = Math.floor(Math.random() * (max - min + 1) ) + min;
-        randomList.push(randomNum);
+        if(!randomList.includes(randomNum)){
+            randomList.push(randomNum)
+        } else{
+            randomList.push(randomNum)
+        }
+        
     }
     return randomList
     
