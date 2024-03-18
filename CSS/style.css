@@ -65,7 +65,6 @@ h1{
 
 main{
     background-color: #0c6481;
-    padding: 30px 0;
 }
 
 #container{
@@ -79,6 +78,18 @@ main{
     align-content: flex-start;
 }
 
+.container-over{
+    margin: 0 auto;
+    width: 600px;
+    height: 600px;
+    background-color: transparent;
+    border: solid 1px darkblue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
 .box{
     height: calc(100% / 10);
     width: calc(100% / 10);
@@ -89,8 +100,25 @@ main{
     color: black;
 }
 
-.click-cell{
+span{
+    cursor: pointer;
+}
+
+.counter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 75px;
+    font-size: 30px;
+    color: white;
+}
+
+.click-cell-over{
     background-color: coral;
+}
+
+.click-cell-continue{
+    background-color: blue;
 }
 
 .hard-box{

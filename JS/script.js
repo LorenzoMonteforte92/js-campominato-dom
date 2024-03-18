@@ -18,22 +18,39 @@ startBtn.addEventListener(`click`, function(){
     let boxContainer = document.querySelector(`#container`);
     boxContainer.innerHTML = ` `;
     let selectLevel = document.querySelector(`#livello`).value;
+    let mainSection = document.querySelector(`#main`)
+    
+    
+    //array di numeri random
+    let randomArr = getRndInteger(1, 100, 16);
+    console.log(randomArr);
+
+    //punteggio del gioco
+    let gameScore = 0
+    let scoreCounter = generateCounter(gameScore);
+    mainSection.prepend(scoreCounter);
+
     
     //stampare un tipo di griglia in base alla difficoltà del gioco
     if(selectLevel === `easy`) {
-        //generare una griglia di 100 elementi con numeri da 1 a 100
         
-        //stamparci dentro gli elementi usando una funzione
+        //generare una griglia di 100 elementi con numeri da 1 a 100
         let newSquare
         for(let i = 1; i <= 100; i++){
             newSquare = generateSquare (i);
             boxContainer.append(newSquare);
             newSquare.addEventListener(`click`, function(){
-                this.classList.add(`click-cell`)
-                console.log(i)
+                let gameResult = clickEvent(randomArr, i)
+                console.log(gameResult);
+                this.classList.add(gameResult)
+                if(gameResult === `click-cell-continue`){
+                    gameScore ++
+                } else {
+                    alert(`Game Over, hai totalizzato: ${gameScore} punti`)
+                }
             })
         }
-} else if (selectLevel === `hard`){
+    } else if (selectLevel === `hard`){
         let newSquare
         for(let i = 1; i <= 81; i++){
             newSquare = generateSquare (i);
@@ -41,10 +58,9 @@ startBtn.addEventListener(`click`, function(){
             boxContainer.append(newSquare);
             newSquare.addEventListener(`click`, function(){
                 this.classList.add(`click-cell`)
-                console.log(i)
             })
         }
-} else if (selectLevel === `crazy`){
+    } else if (selectLevel === `crazy`){
         let newSquare
         for(let i = 1; i <= 49; i++){
             newSquare = generateSquare (i);
@@ -52,15 +68,13 @@ startBtn.addEventListener(`click`, function(){
             boxContainer.append(newSquare);
             newSquare.addEventListener(`click`, function(){
                 this.classList.add(`click-cell`)
-                console.log(i)
             })
         }
     }
     
 })
 
-let random = getRndInteger(1, 100, 16);
-console.log(random);
+
 
 // ----------------
 //     FUNCTIONS
@@ -74,6 +88,13 @@ function generateSquare (number){
     square.classList.add(`box`);
     square.innerHTML += `<span>${number}</span>`
     return square
+}
+
+function generateCounter(number){
+    let counter = document.createElement(`div`);
+    counter.classList.add(`counter`);
+    counter.innerHTML += `<span>Score: ${number}</span>`
+    return counter
 }
 
 //funzione che genera un numero random
@@ -95,7 +116,29 @@ function getRndInteger(min, max, number) {
     return randomList
     
   }
+//funzione che legge l'array
+//array --> inserire la variabile dell'array da leggere
+//number --> inserire l'indice dell'array da confrontare
+//ritorna nome della classe da aggiungere alla cella
+function clickEvent(arrayName, number){
+    let classAdd
+    if(arrayName.includes(number)){
+        classAdd = `click-cell-over`
+    } else {
+        classAdd = `click-cell-continue`
+    }
 
-function changeColorClick (){
-
+    return classAdd
 }
+
+// function gameOver (){
+//     const element = document.getElementById("container");
+//                     element.remove();
+//                     let overContainer = document.createElement(`div`);
+//                     overContainer.classList.add(`container-over`);
+//                     overContainer.innerHTML += `<h1>Game Over</h1>`
+// }
+//processo
+
+//se clicco su una casella e il numero di quet'ultima è presente nell'array (.includes) allora casella rossa e game over
+//se non è un numero dell'array aggiungo classe click-cell-continue e aggiungo 1 alla variabile contatore del punteggio che stampo in un angolo
