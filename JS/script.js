@@ -20,11 +20,7 @@ startBtn.addEventListener(`click`, function(){
     let selectLevel = document.querySelector(`#livello`).value;
     let counterSection = document.querySelector(`#counter-wrapper`)
     counterSection.innerHTML = ` `;
-    
-    
-    //array di numeri random
-    let randomArr = getRndInteger(1, 100, 16);
-    console.log(randomArr);
+
 
     //punteggio del gioco
     let gameScore = 0
@@ -35,6 +31,8 @@ startBtn.addEventListener(`click`, function(){
     if(selectLevel === `easy`) {
         let gameCounter = generateCounter(gameScore)
         counterSection.append(gameCounter)
+        let randomArr = getRndInteger(1, 100, 16);
+        console.log(randomArr);
         //generare una griglia di 100 elementi con numeri da 1 a 100
         let newSquare
         for(let i = 1; i <= 100; i++){
@@ -48,6 +46,7 @@ startBtn.addEventListener(`click`, function(){
                     gameScore ++;
                     gameCounter.innerHTML = ``;
                     gameCounter.innerHTML += `<span>Score: ${gameScore}</span>`
+                    this.style.pointerEvents = `none`
                 }   else {
                     boxContainer.innerHTML = ` `;
                     let gameFinish = gameOver (gameScore);
@@ -58,7 +57,8 @@ startBtn.addEventListener(`click`, function(){
     } else if (selectLevel === `hard`){
         let gameCounter = generateCounter(gameScore);
         counterSection.append(gameCounter);
-
+        let randomArr = getRndInteger(1, 81, 16);
+        console.log(randomArr);
         let newSquare
         for(let i = 1; i <= 81; i++){
             newSquare = generateSquare (i);
@@ -72,6 +72,7 @@ startBtn.addEventListener(`click`, function(){
                     gameScore ++;
                     gameCounter.innerHTML = ``;
                     gameCounter.innerHTML += `<span>Score: ${gameScore}</span>`
+                    this.style.pointerEvents = `none`
                 } else {
                     boxContainer.innerHTML = ` `;
                     let gameFinish = gameOver (gameScore);
@@ -82,7 +83,8 @@ startBtn.addEventListener(`click`, function(){
     } else if (selectLevel === `crazy`){
         let gameCounter = generateCounter(gameScore);
         counterSection.append(gameCounter);
-
+        let randomArr = getRndInteger(1, 49, 1);
+        console.log(randomArr);
         let newSquare
         for(let i = 1; i <= 49; i++){
             newSquare = generateSquare (i);
@@ -96,7 +98,8 @@ startBtn.addEventListener(`click`, function(){
                     gameScore ++;
                     gameCounter.innerHTML = ``;
                     gameCounter.innerHTML += `<span>Score: ${gameScore}</span>`
-                } else {
+                    this.style.pointerEvents = `none`
+                } else if (gameResult === `click-cell-over`) {
                     boxContainer.innerHTML = ` `;
                     let gameFinish = gameOver (gameScore);
                     boxContainer.append(gameFinish);
@@ -137,18 +140,16 @@ function generateCounter(number){
 //return: array di numeri random senza doppioni
 function getRndInteger(min, max, number) {
     let randomList = []
-    for (let i = 1; i <= number; i++){
-        randomNum = Math.floor(Math.random() * (max - min + 1) ) + min;
-        if(!randomList.includes(randomNum)){
-            randomList.push(randomNum)
-        } else{
-            randomList.push(randomNum)
+    while(randomList.length < number){
+        let random = Math.floor(Math.random() * (max - min + 1) ) + min;
+        if(!randomList.includes(random)){
+            randomList.push(random)
         }
-        
     }
     return randomList
-    
   }
+
+  
 //funzione che legge l'array
 //array --> inserire la variabile dell'array da leggere
 //number --> inserire l'indice dell'array da confrontare
